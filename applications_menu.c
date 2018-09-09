@@ -26,8 +26,6 @@ int main() {
 	}
 
 	break;
-	
-       break;
     
      case 2:
       break;
