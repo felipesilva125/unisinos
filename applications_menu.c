@@ -14,18 +14,21 @@ int main() {
     
     scanf("%hd", &option);
     pid_t pid;
-   
-    switch(option) {
-      case 1:
-	        if((pid=fork()) < 0){
-		        printf("Couldn't create new process to call the browser");	
-	        }else if(pid == 0) {
-		        execlp("/usr/lib/firefox/firefox", "firefox", "--new-window", NULL);
-		        // Gravar o PID do fork em uma variável e passar no call_menu()
-           }
 
-    	break;
-        
+    switch(option) {
+     case 1:
+	if((pid=fork()) < 0){
+		printf("Couldn't create new process to call the browser");	
+	}
+	else if(pid == 0) {
+		execlp("/usr/lib/firefox/firefox", "firefox", "--new-window", NULL);
+		// Gravar o PID do fork em uma variável e passar no call_menu()
+	}
+
+	break;
+	
+       break;
+    
      case 2:
       break;
       
@@ -36,12 +39,12 @@ int main() {
       break;
 
      case 5:	
-	      printf("Exiting application.\n");
-	   break;
+	printf("Exiting application.\n");
+	break;
 
      default:
-	     printf("Invalid option, please choose from the menu.\n");
-	   break;
+	printf("Invalid option, please choose from the menu.\n");
+	break;
     }
  }
 return 0; 
