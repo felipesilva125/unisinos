@@ -45,24 +45,26 @@ int main() {
 
 	if((bs=fork()) < 0){
 		printf("Couldn't create new process to call the browser");
-		strncpy(bs_status, "Falhou", 15);	
+		set_status(1, "- Falhou");	
 	}
-	else if(bs == 0) {
-		bs = getpid();		
-		set_status(1, "Executando");
+	else if(bs == 0) {	
+		set_status(1, "- Executando");	
 		call_menu();
-		sleep(0.1);	
-		execlp("/usr/lib/firefox/firefox", "firefox", "--new-window", url, NULL);		
+		execlp("/usr/lib/firefox/firefox", "firefox", "--new-window", url, NULL);
+		sleep(0.1);
+		bs = getpid();	
+				
 	}
 	break;
     
      case 2:
 	if((es=fork()) < 0){
 		printf("Couldn't create new process to call gedit");	
+		set_status(2, "- Falhou");
 	}
 	else if(es == 0) {
 		es = getpid();	
-		set_status(2, "Executando");	
+		set_status(2, "- Executando");	
 		call_menu();
 		sleep(0.1);	
 		execlp("gedit","gedit", NULL);		
@@ -72,13 +74,14 @@ int main() {
      case 3:
 	if((ts=fork()) < 0){
 			printf("Couldn't create new process to call the browser");	
+			set_status(3, "- Falhou");
 		}
-	else if(ts == 0) {
-			ts = getpid();		
-			set_status(3, "Executando");
-			call_menu();
-			sleep(0.1);	
-			execlp("gnome-terminal","gnome-terminal", NULL);		
+	else if(ts == 0) {	
+			set_status(3, "- Executando");	
+			ts = getpid();
+			call_menu();	
+			sleep(0.1);
+			execlp("gnome-terminal","gnome-terminal", NULL);			
 		}
       break;
       
@@ -92,20 +95,20 @@ int main() {
 			switch(n)
 			{
 				case 1:
-				   set_status(1, "Abortado");
+				   set_status(1, "- Abortado");
 				   printf("Processo Web Browser finalizado\n");
 				   kill(bs, SIGKILL);
 			  	  		
 				   break;
 		
 				case 2:
-				   set_status(2, "Abortado");
+				   set_status(2, "- Abortado");
 				   printf("Processo Editor finalizado\n");
 				   kill(es, SIGKILL);			   					
 				   break;
 
 				case 3:
-				   set_status(3, "Abortado");
+				   set_status(3, "- Abortado");
 				   printf("Processo Terminal finalizado\n");
 				   kill(ts, SIGKILL);								
 				   break;
