@@ -10,6 +10,7 @@ const char* queue_name = "/queue_name1";
 
 //Estrutura de dados para a mensagem
 typedef struct Message {
+	char* name;
 	int x;
 	int y;
 } TMessage;
@@ -26,7 +27,8 @@ int main(int argc, char* argv[]) {
 	mqd_t queue;
 	//Declaração da mensagem
 	TMessage m;
-	//Texto a ser enviado na mensagem - entrada por linha de comando		
+	//Texto a ser enviado na mensagem - entrada por linha de comando
+	char* name = argv[0];
 	int x = atoi(argv[1]);
 	int y = atoi(argv[2]);	
 
@@ -50,6 +52,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	//Montar a mensagem	
+	m.name = name;
 	m.x = x;
 	m.y = y;
 
