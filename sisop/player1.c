@@ -6,7 +6,7 @@
 #include <mqueue.h>
 
 //Nome da fila
-const char* board = "/board1";
+const char* queue_name = "/queue_name1";
 
 //Estrutura de dados para a mensagem
 typedef struct Mensagem {
@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	//Obter descritor (mq_open+O_WRONLY+O_CREAT)
-	queue = mq_open(board, O_WRONLY | O_CREAT, 0770, NULL);
+	queue = mq_open(queue_name, O_WRONLY | O_CREAT, 0770, NULL);
 	if (queue == (mqd_t) -1) {
 		perror("mq_open");
 		exit(2);
