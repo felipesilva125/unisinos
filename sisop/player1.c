@@ -9,10 +9,10 @@
 const char* queue_name = "/queue_name1";
 
 //Estrutura de dados para a mensagem
-typedef struct Mensagem {
+typedef struct Message {
 	int x;
 	int y;
-} TMensagem;
+} TMessage;
 
 int main(int argc, char* argv[]) {
 
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 	//Declaração da fila
 	mqd_t queue;
 	//Declaração da mensagem
-	TMensagem m;
+	TMessage m;
 	//Texto a ser enviado na mensagem - entrada por linha de comando		
 	int x = atoi(argv[1]);
 	int y = atoi(argv[2]);	
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 	m.y = y;
 
 	//Enviar (mq_send)
-	if (mq_send(queue, (const char*) &m, sizeof(TMensagem), 29) != 0) {
+	if (mq_send(queue, (const char*) &m, sizeof(TMessage), 29) != 0) {
 		perror("send #29");
 	}
 
