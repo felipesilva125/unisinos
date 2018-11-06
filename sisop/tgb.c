@@ -20,7 +20,7 @@ typedef struct Message {
 } TMessage;
 
 ssize_t get_msg_buffer_size(mqd_t queue);
-void print_msg(TMessage* m);
+void make_play(TMessage* m);
 
 // This function prints the ttt board in it's current state.
 void print_board() {
