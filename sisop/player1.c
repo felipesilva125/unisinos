@@ -10,7 +10,7 @@ const char* queue_name = "/queue_name1";
 
 //Estrutura de dados para a mensagem
 typedef struct Message {
-	char* name;
+	int player;
 	int x;
 	int y;
 } TMessage;
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	//Montar a mensagem	
-	m.name = "p1";
+	m.player = 1;
 	m.x = x;
 	m.y = y;
 
