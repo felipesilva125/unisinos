@@ -13,7 +13,7 @@ const char* queue_name = "/queue_name1";
 char board[SIZE][SIZE];
 
 typedef struct Message {
-	char* name;
+	int player;
 	int x;
 	int y;
 	
@@ -34,7 +34,15 @@ void print_board() {
 }
 
 void make_play(TMessage* m) {
-	printf("player=%s a=%d, c=%d\n", m->name, m->x, m->y);
+	if(m->player == 1) {
+		board[m->x][m-y] = 'X';
+	}
+	
+	if(m->player == 2){
+		board[m->x][m-y] = 'O';
+	}
+	
+	print_board();
 }
 
 ssize_t get_msg_buffer_size(mqd_t queue) {
