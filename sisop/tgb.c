@@ -35,11 +35,11 @@ void print_board() {
 
 void make_play(TMessage* m) {
 	if(m->player == 1) {
-		board[m->x][m-y] = 'X';
+		board[m->x][m->y] = 'X';
 	}
 	
 	if(m->player == 2){
-		board[m->x][m-y] = 'O';
+		board[m->x][m->y] = 'O';
 	}
 	
 	print_board();
@@ -130,7 +130,7 @@ if (nbytes == -1) {
 }
 
 //Print da mensagem recebida
-printf("bytes recebidos: %d\n", nbytes);
+printf("Jogada completada.");
 make_play((TMessage*) buffer);
 
 //Liberar descritor (mq_close)
