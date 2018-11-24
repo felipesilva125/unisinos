@@ -58,22 +58,44 @@ ssize_t get_msg_buffer_size(mqd_t queue) {
 	exit(3);
 }
 
+void check_player(char mark){
+	
+	if(mark == 'X')
+		puts("Player 1 wins!");
+	else
+		puts("Player 2 wins!");
+}
+
 bool check_win() {
 	//Verify if any wins on all the board lines.
 	for(int i = 0; i < SIZE; i++) {
-		if(board[i][0] != '-' && board[i][0] == board[i][1] && board[i][0] == board[i][2]){
+		if(board[i][0] != '-' && board[i][0] == board[i][1] && board[i][1] == board[i][2]){
+			check_player(board[i][0]);
+			printf("The winner filled the %d line!", i);
 			return true;
 		}
 	}
 	
 	//Verify if any wins on all the board columns.
 	for(int i = 0; i < SIZE; i++) {
-		if(board[i][0] != '-' && board[0][i] == board[1][i] && board[0][i] == board[2][i]){
+		if(board[0][i] != '-' && board[0][i] == board[1][i] && board[0][i] == board[2][i]){
+			check_player(board[0][i]);
+			printf("The winner filled the %d column!", i);
 			return true;
 		}
 	}
+	
+	//Verify main diagonal
+	if(board[0][0] != '-' && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
+		check_player(board[1][1]);
+		puts("The winner filled the main diagonal!");
+		return true;
+	}
 
-	if((board[0][0] != '-' && (board[0][0] == board[1][1]) == board[2][2]) || (board[0][2] != '-' && (board[0][2] == board[1][1]) == board[0][1])) {
+	//Verify secondary diagonal
+	if(board[0][2] != '-' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+		check_player(board[1][1]);
+		puts("The winner filled the secondary diagonal!");
 		return true;
 	}
 
@@ -118,20 +140,24 @@ if (queue == (mqd_t) -1) {
 	exit(2);
 }
 
-//Alocar buffer para receber msg
-tam_buffer = get_msg_buffer_size(queue);
-buffer = calloc(tam_buffer, 1);
+while(check_win() == false) {
 
-//Receber (mq_recv)
-nbytes = mq_receive(queue, buffer, tam_buffer, NULL);
-if (nbytes == -1) {
-	perror("receive");
-	exit(4);
+	//Alocar buffer para receber msg
+	tam_buffer = get_msg_buffer_size(queue);
+	buffer = calloc(tam_buffer, 1);
+
+	//Receber (mq_recv)
+	nbytes = mq_receive(queue, buffer, tam_buffer, NULL);
+	if (nbytes == -1) {
+		perror("receive");
+		exit(4);
+	}	
+
+	//Print da mensagem recebida
+
+	make_play((TMessage*) buffer);
+	
 }
-
-//Print da mensagem recebida
-printf("Jogada completada.");
-make_play((TMessage*) buffer);
 
 //Liberar descritor (mq_close)
 mq_close(queue);
